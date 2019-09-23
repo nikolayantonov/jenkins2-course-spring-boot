@@ -1,7 +1,7 @@
 node {
     stage ‘Clone repository’
     checkout([
-        $class: 'GitSCM', 
+        $class: 'GitSCM',
         branches: [
             [name: '*/master']
         ],
@@ -15,4 +15,8 @@ node {
 
     stage ‘Build & package’
     def img = docker.build('atmosphere-jenkins')
+
+    stage 'Docker push'
+    docker.withRegistry('https://473293451041.dkr.ecr.eu-central-1.amazonaws.com/jenkins-ecr-test', 'ecr:eu-west-1:demo-jenkins-ecr') {
+    docker.image('atmosphere-jenkins').push('latest')
 }
