@@ -18,5 +18,6 @@ node {
 
     stage 'Docker push'
     docker.withRegistry('https://473293451041.dkr.ecr.eu-central-1.amazonaws.com', 'ecr:eu-west-1:jenkins-ecr-test') {
-    docker.image('atmosphere-jenkins').push('latest')
+      docker.image('atmosphere-jenkins').push('latest')
+    }
 }
