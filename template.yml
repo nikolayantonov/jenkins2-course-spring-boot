@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworlddeployment
+  labels:
+    app: demo-jenkins-ecr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-jenkins-ecr
+  template:
+    metadata:
+      labels:
+        app: demo-jenkins-ecr
+    spec:
+      containers:
+      - name: demo-jenkins-ecr
+        image: <ecr_url>/<ecr_image>
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: helloworldservice
+spec:
+  type : LoadBalancer
+  selector:
+    app: demo-jenkins-ecr
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
